@@ -2,5 +2,19 @@
     <head>
         <script src="https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/p5.js"></script>
         <script src="script.js"></script>
+        <title>オセロ！！！！</title>
     </head>
-</html>
+
+    <body>
+        <a href="https://github.com/ZozonTeq/p5js-test">sorce code</a>
+        <button onclick="
+            vsBot = vsBot ? false : true;
+            document.getElementsByClassName('enable-bot-btn')[0].innerText = 'BOTを' + (vsBot ? '無効に' : '有効に') + 'する';"
+            class="enable-bot-btn">BOTを有効にする</button>
+            <button onclick="
+            assist = assist ? false : true;
+            document.getElementsByClassName('enable-assist-btn')[0].innerText = 'アシストを' + (assist ? '無効に' : '有効に') + 'する';"
+            class="enable-assist-btn">アシストを有効にする</button>
+            <div id="canvas"></div>
+    </body>
+</html> 
