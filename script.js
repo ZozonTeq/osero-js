@@ -6,11 +6,12 @@ var stage = [
     0,0,0,0,0,0,0,0,
     0,0,0,0,0,0,0,0,
     0,0,0,0,0,0,0,0,
-    0,0,0,1,2,0,0,0,
     0,0,0,2,1,0,0,0,
+    0,0,0,1,2,0,0,0,
     0,0,0,0,0,0,0,0,
     0,0,0,0,0,0,0,0,
     0,0,0,0,0,0,0,0,]
+let isDebug = false;
 
 // スコア変数
 let player1_score = 0 ;
@@ -70,7 +71,6 @@ function mouseClicked(){
     replaceCell(arrX,arrY);
     turn = (turn == 1) ? 2 : 1;//次のプレイヤーにターンを渡す。
 }
-let isDebug = true;
 function getCell(x,y){
     return stage[y*8 + x];
 }//xとyを渡すとそこの石を返す
@@ -129,14 +129,12 @@ function replaceCell(x,y){
         return;
     }
     if(canPlace(x,y,turn)){
-        for_i :for(let i = 1  ; i < 8 ; i ++){
+        for_i :for(let i = 1  ; i <= 8 ; i ++){
             let res = false;
             let pnum = 0;
             let nres = false;//おけることが確定か？じゃないか？
-            
             arr = getCells(x,y,i);
             if(arr.length > 3){
-                if(arr[0]!=0) continue for_i;//１番目がすでに埋められていないか？
                 if(arr[1]==(turn == 1 ? 2 : 1)){//二番目が敵の石か？
                     for_j : for(let j = 1 ; j < arr.length; j++){
                         if(!nres){
@@ -144,12 +142,13 @@ function replaceCell(x,y){
                                 continue for_j;
                             }//２番目以降に何もないならおけない
                             if (arr[j] == (turn == 1 ? 2 : 1)){
-    
+                                res = true;
                             }//てきのやつか？
                             else if(arr[j] == turn){
                                 res = true;
                                 pnum = j;
                                 nres = true;
+                                console.log("checking"  +i);
                             }//自分のか
                         }
 
@@ -200,6 +199,7 @@ function replaceCell(x,y){
                         }//左上
                         break;
                 }
+                continue for_i;
             }  
         }
     }
@@ -211,6 +211,7 @@ function canPlace(x,y,t){
         return false;
     }
     let res  = false;
+    let nres = false;
     for_i : for(let i = 1  ; i <= 8 ; i ++){
         arr = getCells(x,y,i);
         if(arr.length > 3){
@@ -226,6 +227,7 @@ function canPlace(x,y,t){
                     }//てきのやつか？
                     else if(arr[j] == t){
                         res = true;
+                        nres = true;
                         return true;
                     }
                 }
@@ -235,5 +237,5 @@ function canPlace(x,y,t){
             }
         }
     }
-    return res;
+    return nres;
 }
